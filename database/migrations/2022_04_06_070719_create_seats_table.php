@@ -15,7 +15,14 @@ class CreateSeatsTable extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('bogi_id');
+            $table->unsignedBigInteger('train_id');
+            $table->unsignedBigInteger('booked')->default(0)->comment('0=open,1=booked');
             $table->timestamps();
+
+            $table->foreign('bogi_id')->references('id')->on('bogis')->onDelete('cascade');
+            $table->foreign('train_id')->references('id')->on('trains');
         });
     }
 
